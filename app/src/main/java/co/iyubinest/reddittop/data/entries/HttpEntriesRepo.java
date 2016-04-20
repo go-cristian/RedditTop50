@@ -16,7 +16,6 @@
 package co.iyubinest.reddittop.data.entries;
 
 import co.iyubinest.reddittop.data.entries.entities.WebEntries;
-import java.util.Collection;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
@@ -32,7 +31,7 @@ public class HttpEntriesRepo implements EntriesRepo, Callback<WebEntries> {
 
   @Override public void page(int number, Callback callback) {
     this.callback = callback;
-    service.entries(1).enqueue(this);
+    service.entries(number * EntriesRepo.SIZE, EntriesRepo.SIZE).enqueue(this);
   }
 
   @Override public void onResponse(Response<WebEntries> response) {
@@ -46,8 +45,6 @@ public class HttpEntriesRepo implements EntriesRepo, Callback<WebEntries> {
   @Override public void onFailure(Throwable t) {
     callback.failure();
   }
-
-
 
   public static Retrofit retrofit(String baseUrl) {
     return new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())

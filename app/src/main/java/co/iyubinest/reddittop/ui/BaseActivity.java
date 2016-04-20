@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.data.entries;
+package co.iyubinest.reddittop.ui;
 
-import co.iyubinest.reddittop.data.entries.entities.WebEntries;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import android.support.v7.app.AppCompatActivity;
+import co.iyubinest.reddittop.App;
+import co.iyubinest.reddittop.di.AppComponent;
 
-public interface EntriesService {
-  @GET("top.json") Call<WebEntries> entries(@Query("count") int count, @Query("limit") int limit);
+public class BaseActivity extends AppCompatActivity {
+
+  public App getApp() {
+    return (App) getApplication();
+  }
+
+  public AppComponent injector() {
+    return getApp().injector();
+  }
 }

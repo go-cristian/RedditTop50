@@ -13,13 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.data.entries;
+package co.iyubinest.reddittop;
 
-import co.iyubinest.reddittop.data.entries.entities.WebEntries;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import android.app.Application;
+import co.iyubinest.reddittop.di.AppComponent;
+import co.iyubinest.reddittop.di.DaggerAppComponent;
 
-public interface EntriesService {
-  @GET("top.json") Call<WebEntries> entries(@Query("count") int count, @Query("limit") int limit);
+public class App extends Application {
+
+  private AppComponent injector;
+
+  @Override public void onCreate() {
+    super.onCreate();
+    injector = DaggerAppComponent.create();
+  }
+
+  public AppComponent injector() {
+    return injector;
+  }
 }

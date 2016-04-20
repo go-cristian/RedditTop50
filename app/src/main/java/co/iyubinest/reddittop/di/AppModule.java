@@ -13,13 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.data.entries;
+package co.iyubinest.reddittop.di;
 
-import co.iyubinest.reddittop.data.entries.entities.WebEntries;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import co.iyubinest.reddittop.BuildConfig;
+import co.iyubinest.reddittop.data.entries.EntriesRepo;
+import co.iyubinest.reddittop.data.entries.HttpEntriesRepo;
+import dagger.Module;
+import dagger.Provides;
+import javax.inject.Singleton;
 
-public interface EntriesService {
-  @GET("top.json") Call<WebEntries> entries(@Query("count") int count, @Query("limit") int limit);
+@Module public class AppModule {
+
+  @Singleton @Provides public EntriesRepo entriesRepo() {
+    return new HttpEntriesRepo(HttpEntriesRepo.retrofit(BuildConfig.BASE_URL));
+  }
 }

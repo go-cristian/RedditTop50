@@ -6,9 +6,21 @@
   tools:context=".ui.entries.EntriesActivity"
   >
 
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Hello World!"
-    />
+  <include layout="@layout/retry" />
+
+  <include layout="@layout/loading" />
+
+  <LinearLayout
+    android:id="@+id/entries_wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <co.iyubinest.reddittop.ui.widgets.EntriesWidget
+      android:id="@+id/entries"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+  </LinearLayout>
 </RelativeLayout>
