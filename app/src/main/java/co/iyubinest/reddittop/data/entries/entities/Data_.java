@@ -13,18 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.ui.entries;
+package co.iyubinest.reddittop.data.entries.entities;
 
-import java.util.Collection;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-public interface EntriesRepo {
-  int SIZE = 10;
+public class Data_ {
 
-  void page(int number, Callback callback);
-
-  interface Callback {
-    void failure();
-
-    void success(Collection<RedditEntry> entries);
-  }
+  @SerializedName("title") @Expose public String title;
+  @SerializedName("author") @Expose public String author;
+  @SerializedName("created") @Expose public Integer created;
+  @SerializedName("thumbnail") @Expose public String thumbnail;
+  @SerializedName("num_comments") @Expose public Integer numComments;
+  @SerializedName("preview") @Expose public Preview preview;
 }

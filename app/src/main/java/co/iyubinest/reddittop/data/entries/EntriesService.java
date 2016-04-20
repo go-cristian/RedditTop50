@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.ui.entries;
+package co.iyubinest.reddittop.data.entries;
 
-import co.iyubinest.reddittop.data.entries.RedditEntry;
-import java.util.Collection;
+import co.iyubinest.reddittop.data.entries.entities.WebEntries;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
-public interface EntriesView {
-  void showLoading();
-
-  void showRetry();
-
-  void render(Collection<RedditEntry> entries);
-
-  void showRetryCell();
+public interface EntriesService {
+  @GET("top.json") Call<WebEntries> entries(@Query("count") int limit);
 }

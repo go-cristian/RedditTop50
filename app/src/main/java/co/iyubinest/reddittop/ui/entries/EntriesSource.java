@@ -15,6 +15,8 @@
  */
 package co.iyubinest.reddittop.ui.entries;
 
+import co.iyubinest.reddittop.data.entries.EntriesRepo;
+import co.iyubinest.reddittop.data.entries.RedditEntry;
 import java.util.Collection;
 
 public class EntriesSource implements EntriesRepo.Callback {

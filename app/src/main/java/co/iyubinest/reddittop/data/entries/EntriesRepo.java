@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.ui.entries;
+package co.iyubinest.reddittop.data.entries;
 
-import co.iyubinest.reddittop.data.entries.RedditEntry;
 import java.util.Collection;
 
-public interface EntriesView {
-  void showLoading();
+public interface EntriesRepo {
+  int SIZE = 10;
 
-  void showRetry();
+  void page(int number, Callback callback);
 
-  void render(Collection<RedditEntry> entries);
+  interface Callback {
+    void failure();
 
-  void showRetryCell();
+    void success(Collection<RedditEntry> entries);
+  }
 }

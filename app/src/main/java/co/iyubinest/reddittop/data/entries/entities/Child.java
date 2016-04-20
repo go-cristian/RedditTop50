@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.ui.entries;
+package co.iyubinest.reddittop.data.entries.entities;
 
-import co.iyubinest.reddittop.data.entries.RedditEntry;
-import java.util.Collection;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-public interface EntriesView {
-  void showLoading();
+public class Child {
 
-  void showRetry();
-
-  void render(Collection<RedditEntry> entries);
-
-  void showRetryCell();
+  @SerializedName("data") @Expose public Data_ data;
 }

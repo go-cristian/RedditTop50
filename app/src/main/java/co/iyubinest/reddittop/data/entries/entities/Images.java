@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.ui.entries;
+package co.iyubinest.reddittop.data.entries.entities;
 
-import com.google.auto.value.AutoValue;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-@AutoValue public abstract class RedditEntry {
-  public static RedditEntry create() {
-    return new AutoValue_RedditEntry();
-  }
+public class Images {
+  @SerializedName("source") @Expose public Source source;
 }

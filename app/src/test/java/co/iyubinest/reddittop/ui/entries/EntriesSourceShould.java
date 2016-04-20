@@ -15,6 +15,8 @@
  */
 package co.iyubinest.reddittop.ui.entries;
 
+import co.iyubinest.reddittop.data.entries.EntriesRepo;
+import co.iyubinest.reddittop.data.entries.RedditEntry;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
