@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+  compileSdkVersion 23
+  buildToolsVersion "23.0.3"
+
+  defaultConfig {
+    applicationId "co.iyubinest.reddittop"
+    minSdkVersion 15
+    targetSdkVersion 23
+    versionCode 1
+    versionName "1.0"
+
+    buildConfigField "String", "BASE_URL", "\"http://api.fixer.io\""
+    multiDexEnabled true
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  packagingOptions {
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+}
+
+configurations.all {
+  resolutionStrategy.force 'com.android.support:support-annotations:23.1.1'
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  compile 'com.jakewharton:butterknife:7.0.1'
+  compile 'com.google.dagger:dagger:2.2'
+  apt 'com.google.dagger:dagger-compiler:2.2'
+  androidTestApt 'com.google.dagger:dagger-compiler:2.2'
+  provided 'org.glassfish:javax.annotation:10.0-b28'
+  apt 'frankiesardo:auto-parcel:1.0.1'
+  provided 'frankiesardo:auto-parcel:1.0.1'
+
+  compile 'com.android.support:appcompat-v7:23.3.0'
+  compile 'com.android.support:support-annotations:23.3.0'
+  compile 'com.android.support:cardview-v7:23.3.0'
+  compile 'com.android.support:recyclerview-v7:23.3.0'
+
+  compile 'com.squareup.okhttp3:okhttp:3.0.0-RC1'
+  compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
+  compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
+  compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
+
+  testCompile 'junit:junit:4.12'
+  testCompile 'org.mockito:mockito-core:1.10.19'
+  testCompile 'com.squareup.okhttp3:mockwebserver:3.0.0-RC1'
+
+  androidTestCompile 'com.android.support.test:runner:0.5'
+  androidTestCompile 'com.android.support.test:rules:0.5'
+  androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+  androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+  androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.0.0-RC1'
+}
