@@ -15,23 +15,12 @@
  */
 package co.iyubinest.reddittop.ui;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.view.View;
+import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 
 public class ImageLoader {
 
-  public static void background(final View view, String imageUrl) {
-    Glide.with(view.getContext()).load(imageUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
-      @Override
-      public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-        Drawable drawable = new BitmapDrawable(resource);
-        view.setBackgroundDrawable(drawable);
-      }
-    });
+  public static void load(ImageView imageView, String imageUrl) {
+    Glide.with(imageView.getContext()).load(imageUrl).fitCenter().crossFade().into(imageView);
   }
 }

@@ -1,9 +1,11 @@
 package co.iyubinest.reddittop;
 
+import android.content.Intent;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import co.iyubinest.reddittop.ui.entries.EntriesActivity;
+import co.iyubinest.reddittop.ui.preview.PreviewActivity;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,6 +25,8 @@ import static android.support.test.espresso.IdlingPolicies.setMasterPolicyTimeou
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.Visibility.GONE;
 import static android.support.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
@@ -64,6 +68,9 @@ import static java.util.concurrent.TimeUnit.MINUTES;
     onView(withId(R.id.entries_wrapper)).check(matches(withEffectiveVisibility(VISIBLE)));
     onView(withId(R.id.retry)).check(matches(withEffectiveVisibility(GONE)));
     onView(withId(R.id.entries)).perform(actionOnItemAtPosition(0, click()));
+
+    rule.launchActivity(new Intent());
+    intended(hasComponent(PreviewActivity.class.getName()));
   }
 
   private String fromAsset(String assetName) throws Exception {

@@ -59,8 +59,7 @@ public class EntriesWidget extends RecyclerView {
     setLayoutManager(layoutManager);
     addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-        if (dy > 0) //check for scroll down
-        {
+        if (dy > 0) {
           if (layoutManager.findLastCompletelyVisibleItemPosition()
               == layoutManager.getItemCount() - 1) {
             if (endReachedistener != null) endReachedistener.onEndReached();
@@ -79,17 +78,40 @@ public class EntriesWidget extends RecyclerView {
     this.endReachedistener = listener;
   }
 
+  public void setEntrySelectedListener(EntrySelectedListener listener) {
+    ((Adapter) getAdapter()).setEntryListener(listener);
+  }
+
   public interface EndReachedListener {
     void onEndReached();
+  }
+
+  public interface EntrySelectedListener {
+    void onEntrySelected(RedditEntry entry);
+  }
+
+  protected interface OnSelectedListener {
+    void onSelected(int position);
   }
 
   private class Adapter extends RecyclerView.Adapter<Holder> {
 
     private List<RedditEntry> entries = new ArrayList<>();
+    private EntrySelectedListener entryListener;
+    private final OnSelectedListener listener = new OnSelectedListener() {
+      @Override public void onSelected(int position) {
+        if (entryListener != null) entryListener.onEntrySelected(entries.get(position));
+      }
+    };
+
+    public void setEntryListener(EntrySelectedListener entryListener) {
+      this.entryListener = entryListener;
+    }
 
     @Override public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
       return new Holder(
-          LayoutInflater.from(parent.getContext()).inflate(R.layout.entry, parent, false));
+          LayoutInflater.from(parent.getContext()).inflate(R.layout.entry, parent, false),
+          listener);
     }
 
     @Override public void onBindViewHolder(Holder holder, int position) {
@@ -111,11 +133,16 @@ public class EntriesWidget extends RecyclerView {
     private final TextView subtitle;
     private final ImageView thumbnail;
 
-    public Holder(View view) {
+    public Holder(View view, final OnSelectedListener listener) {
       super(view);
       title = (TextView) view.findViewById(R.id.entry_title);
       subtitle = (TextView) view.findViewById(R.id.entry_subtitle);
       thumbnail = (ImageView) view.findViewById(R.id.entry_thumbnail);
+      view.setOnClickListener(new OnClickListener() {
+        @Override public void onClick(View v) {
+          if (listener != null) listener.onSelected(getAdapterPosition());
+        }
+      });
     }
 
     public void entry(RedditEntry entry) {
@@ -124,7 +151,7 @@ public class EntriesWidget extends RecyclerView {
           DateUtils.getRelativeDateTimeString(getContext(),
               new Date().getTime() - entry.date().getTime(), DateUtils.SECOND_IN_MILLIS,
               DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL)));
-      ImageLoader.background(itemView, entry.thumbnail());
+      ImageLoader.load(thumbnail, entry.thumbnail());
     }
   }
 }

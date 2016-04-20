@@ -23,6 +23,7 @@ import co.iyubinest.reddittop.R;
 import co.iyubinest.reddittop.data.entries.EntriesRepo;
 import co.iyubinest.reddittop.data.entries.RedditEntry;
 import co.iyubinest.reddittop.ui.BaseActivity;
+import co.iyubinest.reddittop.ui.preview.PreviewActivity;
 import co.iyubinest.reddittop.ui.widgets.EntriesWidget;
 import java.util.Collection;
 import javax.inject.Inject;
@@ -31,7 +32,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 public class EntriesActivity extends BaseActivity
-    implements EntriesView, EntriesWidget.EndReachedListener {
+    implements EntriesView, EntriesWidget.EndReachedListener, EntriesWidget.EntrySelectedListener {
 
   @Bind(R.id.loading) View loadingView;
   @Bind(R.id.retry) View retryView;
@@ -66,6 +67,7 @@ public class EntriesActivity extends BaseActivity
     show(entriesWrapper);
     entriesView.add(entries);
     entriesView.setEndReachedListener(this);
+    entriesView.setEntrySelectedListener(this);
   }
 
   @Override public void showRetryCell() {
@@ -81,5 +83,9 @@ public class EntriesActivity extends BaseActivity
     retryView.setVisibility(GONE);
     entriesWrapper.setVisibility(GONE);
     view.setVisibility(VISIBLE);
+  }
+
+  @Override public void onEntrySelected(RedditEntry entry) {
+    if (entry.preview() != null) startActivity(PreviewActivity.getIntent(this, entry.preview()));
   }
 }
