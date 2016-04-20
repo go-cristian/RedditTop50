@@ -16,7 +16,9 @@
 package co.iyubinest.reddittop;
 
 import android.app.Application;
+import android.support.annotation.VisibleForTesting;
 import co.iyubinest.reddittop.di.AppComponent;
+import co.iyubinest.reddittop.di.AppModule;
 import co.iyubinest.reddittop.di.DaggerAppComponent;
 
 public class App extends Application {
@@ -25,10 +27,14 @@ public class App extends Application {
 
   @Override public void onCreate() {
     super.onCreate();
-    injector = DaggerAppComponent.create();
+    injector = DaggerAppComponent.builder().appModule(new AppModule(BuildConfig.BASE_URL)).build();
   }
 
   public AppComponent injector() {
     return injector;
+  }
+
+  @VisibleForTesting public void baseUrl(String baseUrl) {
+    injector = DaggerAppComponent.builder().appModule(new AppModule(baseUrl)).build();
   }
 }

@@ -120,10 +120,11 @@ public class EntriesWidget extends RecyclerView {
 
     public void entry(RedditEntry entry) {
       title.setText(entry.title());
-      subtitle.setText(DateUtils.getRelativeDateTimeString(getContext(),
-          new Date().getTime() - entry.date().getTime(), DateUtils.SECOND_IN_MILLIS,
-          DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL));
-      ImageLoader.background(getRootView(), entry.thumbnail());
+      subtitle.setText(String.format("%s - %s", entry.author(),
+          DateUtils.getRelativeDateTimeString(getContext(),
+              new Date().getTime() - entry.date().getTime(), DateUtils.SECOND_IN_MILLIS,
+              DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL)));
+      ImageLoader.background(itemView, entry.thumbnail());
     }
   }
 }

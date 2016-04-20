@@ -15,7 +15,6 @@
  */
 package co.iyubinest.reddittop.di;
 
-import co.iyubinest.reddittop.BuildConfig;
 import co.iyubinest.reddittop.data.entries.EntriesRepo;
 import co.iyubinest.reddittop.data.entries.HttpEntriesRepo;
 import dagger.Module;
@@ -24,7 +23,13 @@ import javax.inject.Singleton;
 
 @Module public class AppModule {
 
+  private final String baseurl;
+
+  public AppModule(String baseUrl) {
+    this.baseurl = baseUrl;
+  }
+
   @Singleton @Provides public EntriesRepo entriesRepo() {
-    return new HttpEntriesRepo(HttpEntriesRepo.retrofit(BuildConfig.BASE_URL));
+    return new HttpEntriesRepo(HttpEntriesRepo.retrofit(baseurl));
   }
 }
