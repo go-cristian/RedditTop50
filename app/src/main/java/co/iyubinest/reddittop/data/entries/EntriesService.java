@@ -15,11 +15,6 @@
  */
 package co.iyubinest.reddittop.data.entries;
 
-import co.iyubinest.reddittop.data.entries.entities.WebEntries;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
-
 public interface EntriesService {
-  @GET("top.json") Call<WebEntries> entries(@Query("count") int count, @Query("limit") int limit);
+  void get(int number, EntriesRepo.Callback callback);
 }

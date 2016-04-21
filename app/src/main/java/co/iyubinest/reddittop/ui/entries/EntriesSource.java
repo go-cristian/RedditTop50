@@ -16,13 +16,14 @@
 package co.iyubinest.reddittop.ui.entries;
 
 import co.iyubinest.reddittop.data.entries.EntriesRepo;
-import co.iyubinest.reddittop.data.entries.RedditEntry;
+import co.iyubinest.reddittop.data.entries.RedEntry;
 import java.util.Collection;
 
 public class EntriesSource implements EntriesRepo.Callback {
   private final EntriesView view;
   private final EntriesRepo repo;
   private int currentPage = 0;
+  private boolean update;
 
   public EntriesSource(EntriesView view, EntriesRepo repo) {
     this.view = view;
@@ -30,7 +31,20 @@ public class EntriesSource implements EntriesRepo.Callback {
   }
 
   public void request() {
-    view.showLoading();
+    request(false);
+  }
+
+  public void request(boolean update) {
+    this.update = update;
+    if (currentPage == 0) {
+      if (update) {
+        view.showUpdating();
+      } else {
+        view.showLoading();
+      }
+    } else {
+      view.showLoadingCell();
+    }
     repo.page(currentPage, this);
   }
 
@@ -42,12 +56,18 @@ public class EntriesSource implements EntriesRepo.Callback {
     }
   }
 
-  @Override public void success(Collection<RedditEntry> entries) {
+  @Override public void success(Collection<RedEntry> entries) {
     if (entries.size() == 0) {
       failure();
     } else {
       currentPage++;
+      if (update) view.clearEntries();
       view.render(entries);
     }
+  }
+
+  public void update() {
+    currentPage = 0;
+    request(true);
   }
 }

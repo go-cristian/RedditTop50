@@ -15,10 +15,9 @@
  */
 package co.iyubinest.reddittop.di;
 
-import co.iyubinest.reddittop.ui.entries.EntriesActivity;
+import co.iyubinest.reddittop.ui.preview.PreviewActivity;
 import dagger.Component;
-import javax.inject.Singleton;
 
-@Singleton @Component(modules = AppModule.class) public interface AppComponent {
-  void inject(EntriesActivity activity);
+@Component(modules = ActivityModule.class) public interface ActivityComponent {
+  void inject(PreviewActivity activity);
 }

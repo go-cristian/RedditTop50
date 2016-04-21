@@ -21,17 +21,18 @@ import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class HttpEntriesRepo implements EntriesRepo, Callback<WebEntries> {
-  private final EntriesService service;
-  private Callback callback;
+public class HttpEntriesRepo implements EntriesService, Callback<WebEntries> {
+  private final RedEntriesService service;
+  private EntriesRepo.Callback callback;
 
   public HttpEntriesRepo(Retrofit retrofit) {
-    service = retrofit.create(EntriesService.class);
+    service = retrofit.create(RedEntriesService.class);
   }
 
-  @Override public void page(int number, Callback callback) {
-    this.callback = callback;
-    service.entries(number * EntriesRepo.SIZE, EntriesRepo.SIZE).enqueue(this);
+  public static Retrofit retrofit(String baseUrl) {
+    return new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(baseUrl)
+        .build();
   }
 
   @Override public void onResponse(Response<WebEntries> response) {
@@ -46,9 +47,8 @@ public class HttpEntriesRepo implements EntriesRepo, Callback<WebEntries> {
     callback.failure();
   }
 
-  public static Retrofit retrofit(String baseUrl) {
-    return new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(baseUrl)
-        .build();
+  @Override public void get(int number, EntriesRepo.Callback callback) {
+    this.callback = callback;
+    service.entries(number * EntriesRepo.SIZE, EntriesRepo.SIZE).enqueue(this);
   }
 }

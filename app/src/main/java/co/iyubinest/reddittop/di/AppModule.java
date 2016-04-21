@@ -15,8 +15,11 @@
  */
 package co.iyubinest.reddittop.di;
 
+import co.iyubinest.reddittop.data.entries.EntriesCache;
 import co.iyubinest.reddittop.data.entries.EntriesRepo;
+import co.iyubinest.reddittop.data.entries.EntriesService;
 import co.iyubinest.reddittop.data.entries.HttpEntriesRepo;
+import co.iyubinest.reddittop.data.entries.MemoryEntriesCache;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
@@ -29,7 +32,15 @@ import javax.inject.Singleton;
     this.baseurl = baseUrl;
   }
 
-  @Singleton @Provides public EntriesRepo entriesRepo() {
+  @Singleton @Provides public EntriesService entriesService() {
     return new HttpEntriesRepo(HttpEntriesRepo.retrofit(baseurl));
+  }
+
+  @Singleton @Provides public EntriesCache entriesCache() {
+    return new MemoryEntriesCache();
+  }
+
+  @Singleton @Provides public EntriesRepo entriesRepo(EntriesCache cache, EntriesService service) {
+    return new EntriesRepo(cache, service);
   }
 }

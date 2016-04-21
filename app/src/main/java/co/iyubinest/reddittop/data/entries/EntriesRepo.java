@@ -17,14 +17,37 @@ package co.iyubinest.reddittop.data.entries;
 
 import java.util.Collection;
 
-public interface EntriesRepo {
-  int SIZE = 10;
+public class EntriesRepo {
+  public static final int SIZE = 10;
+  private final EntriesCache cache;
+  private final EntriesService service;
 
-  void page(int number, Callback callback);
+  public EntriesRepo(EntriesCache cache, EntriesService service) {
+    this.cache = cache;
+    this.service = service;
+  }
 
-  interface Callback {
+  public void page(final int number, final Callback callback) {
+    if (cache.has(number)) {
+      callback.success(cache.get(number));
+    } else {
+      service.get(number, new Callback() {
+
+        @Override public void failure() {
+          callback.failure();
+        }
+
+        @Override public void success(Collection<RedEntry> entries) {
+          callback.success(entries);
+          cache.save(number, entries);
+        }
+      });
+    }
+  }
+
+  public interface Callback {
     void failure();
 
-    void success(Collection<RedditEntry> entries);
+    void success(Collection<RedEntry> entries);
   }
 }

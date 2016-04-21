@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.di;
+package co.iyubinest.reddittop.ui.preview;
 
-import co.iyubinest.reddittop.ui.entries.EntriesActivity;
-import dagger.Component;
-import javax.inject.Singleton;
+public interface PreviewRepo {
+  void save(String imageUrl, Callback callback);
 
-@Singleton @Component(modules = AppModule.class) public interface AppComponent {
-  void inject(EntriesActivity activity);
+  interface Callback {
+    void onFailure();
+
+    void onSuccess();
+  }
 }

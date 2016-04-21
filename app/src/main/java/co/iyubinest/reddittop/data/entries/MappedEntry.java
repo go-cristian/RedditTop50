@@ -31,9 +31,8 @@ public class MappedEntry {
     this.entries = entries;
   }
 
-  public Collection<RedditEntry> value() {
-    List<RedditEntry> mapEntries =
-        new ArrayList<>(entries == null ? 0 : entries.data.children.size());
+  public Collection<RedEntry> value() {
+    List<RedEntry> mapEntries = new ArrayList<>(entries == null ? 0 : entries.data.children.size());
     if (entries != null) {
       for (Child child : entries.data.children) {
         mapEntries.add(map(child));
@@ -42,14 +41,14 @@ public class MappedEntry {
     return mapEntries;
   }
 
-  @NonNull private RedditEntry map(Child child) {
+  @NonNull private RedEntry map(Child child) {
     String preview = null;
     if (child.data.preview != null
         && child.data.preview.images != null
         && child.data.preview.images.size() > 0) {
       preview = child.data.preview.images.get(0).source.url;
     }
-    return RedditEntry.create(child.data.title, child.data.author,
+    return RedEntry.create(child.data.title, child.data.author,
         new Date(Long.valueOf(child.data.created) * 1000L), child.data.numComments,
         child.data.thumbnail, preview);
   }

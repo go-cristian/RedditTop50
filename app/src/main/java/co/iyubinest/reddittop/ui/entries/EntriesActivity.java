@@ -16,12 +16,15 @@
 package co.iyubinest.reddittop.ui.entries;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import co.iyubinest.reddittop.R;
 import co.iyubinest.reddittop.data.entries.EntriesRepo;
-import co.iyubinest.reddittop.data.entries.RedditEntry;
+import co.iyubinest.reddittop.data.entries.RedEntry;
 import co.iyubinest.reddittop.ui.BaseActivity;
 import co.iyubinest.reddittop.ui.preview.PreviewActivity;
 import co.iyubinest.reddittop.ui.widgets.EntriesWidget;
@@ -38,6 +41,8 @@ public class EntriesActivity extends BaseActivity
   @Bind(R.id.retry) View retryView;
   @Bind(R.id.entries_wrapper) View entriesWrapper;
   @Bind(R.id.entries) EntriesWidget entriesView;
+  @Bind(R.id.toolbar_title) TextView titleView;
+  @Bind(R.id.refresh) SwipeRefreshLayout refreshView;
   @Inject EntriesRepo repo;
   private EntriesSource source;
 
@@ -48,6 +53,12 @@ public class EntriesActivity extends BaseActivity
     injector().inject(this);
     source = new EntriesSource(this, repo);
     source.request();
+    titleView.setText(R.string.app_name);
+    refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override public void onRefresh() {
+        source.update();
+      }
+    });
   }
 
   @Override protected void onDestroy() {
@@ -63,15 +74,34 @@ public class EntriesActivity extends BaseActivity
     show(retryView);
   }
 
-  @Override public void render(Collection<RedditEntry> entries) {
+  @Override public void render(Collection<RedEntry> entries) {
     show(entriesWrapper);
     entriesView.add(entries);
     entriesView.setEndReachedListener(this);
     entriesView.setEntrySelectedListener(this);
+    refreshView.setRefreshing(false);
   }
 
   @Override public void showRetryCell() {
+    Snackbar.make(entriesWrapper, R.string.error, Snackbar.LENGTH_SHORT)
+        .setAction(R.string.retry_button, new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            source.request();
+          }
+        })
+        .show();
+  }
 
+  @Override public void showLoadingCell() {
+    Snackbar.make(entriesWrapper, R.string.loading, Snackbar.LENGTH_SHORT).show();
+  }
+
+  @Override public void showUpdating() {
+    refreshView.setRefreshing(true);
+  }
+
+  @Override public void clearEntries() {
+    entriesView.clear();
   }
 
   @Override public void onEndReached() {
@@ -85,7 +115,15 @@ public class EntriesActivity extends BaseActivity
     view.setVisibility(VISIBLE);
   }
 
-  @Override public void onEntrySelected(RedditEntry entry) {
-    if (entry.preview() != null) startActivity(PreviewActivity.getIntent(this, entry.preview()));
+  @Override public void onEntrySelected(RedEntry entry, View view) {
+    if (entry.preview() != null) {
+      View imageToAnimate = view.findViewById(R.id.entry_thumbnail);
+      int[] screenLocation = new int[2];
+      imageToAnimate.getLocationOnScreen(screenLocation);
+      startActivity(
+          PreviewActivity.getIntent(this, entry, screenLocation, imageToAnimate.getWidth(),
+              imageToAnimate.getHeight()));
+      overridePendingTransition(0, 0);
+    }
   }
 }

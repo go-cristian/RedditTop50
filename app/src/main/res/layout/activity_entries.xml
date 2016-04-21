@@ -1,26 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".ui.entries.EntriesActivity"
+  tools:context="co.iyubinest.reddittop.ui.entries.EntriesActivity"
   >
 
   <include layout="@layout/retry" />
 
   <include layout="@layout/loading" />
 
-  <LinearLayout
+  <android.support.design.widget.CoordinatorLayout
     android:id="@+id/entries_wrapper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     >
 
-    <co.iyubinest.reddittop.ui.widgets.EntriesWidget
-      android:id="@+id/entries"
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/colorPrimaryDark"
+      android:minHeight="?attr/actionBarSize"
+      >
+
+      <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        />
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/refresh"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      />
-  </LinearLayout>
-</RelativeLayout>
+      android:layout_marginTop="?attr/actionBarSize"
+      >
+
+      <co.iyubinest.reddittop.ui.widgets.EntriesWidget
+        android:id="@+id/entries"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+  </android.support.design.widget.CoordinatorLayout>
+
+</FrameLayout>
+

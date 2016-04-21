@@ -15,10 +15,21 @@
  */
 package co.iyubinest.reddittop.di;
 
-import co.iyubinest.reddittop.ui.entries.EntriesActivity;
-import dagger.Component;
-import javax.inject.Singleton;
+import co.iyubinest.reddittop.data.preview.GlideMediaStoreRepo;
+import co.iyubinest.reddittop.ui.BaseActivity;
+import co.iyubinest.reddittop.ui.preview.PreviewRepo;
+import dagger.Module;
+import dagger.Provides;
 
-@Singleton @Component(modules = AppModule.class) public interface AppComponent {
-  void inject(EntriesActivity activity);
+@Module public class ActivityModule {
+
+  private final BaseActivity activity;
+
+  public ActivityModule(BaseActivity activity) {
+    this.activity = activity;
+  }
+
+  @Provides public PreviewRepo previewRepo() {
+    return new GlideMediaStoreRepo(activity);
+  }
 }

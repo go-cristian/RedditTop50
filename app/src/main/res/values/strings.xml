@@ -2,4 +2,12 @@
   <string name="app_name">Reddit Top 50</string>
   <string name="retry_button">Retry</string>
   <string name="loading">Loading…</string>
+  <string name="entry_subtitle_format">By %1$s - %2$s</string>
+  <string name="error">There was an error</string>
+  <string name="preview_save">Save to Gallery</string>
+  <string name="preview_saved">Preview Saved</string>
+  <plurals name="comments">
+    <item quantity="one"> %d  comment</item>
+    <item quantity="other"> %d  comments</item>
+  </plurals>
 </resources>

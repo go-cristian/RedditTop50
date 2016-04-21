@@ -33,7 +33,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class HttpEntriesShould {
   @Mock EntriesRepo.Callback callback;
   private MockWebServer server;
-  private EntriesRepo repo;
+  private HttpEntriesRepo repo;
 
   @Before public void before() throws Exception {
     initMocks(this);
@@ -44,16 +44,16 @@ public class HttpEntriesShould {
 
   @Test public void throw_error_on_failure() throws Exception {
     server.enqueue(new MockResponse().setResponseCode(500));
-    repo.page(0, callback);
+    repo.get(0, callback);
     Thread.sleep(200);
     verify(callback, times(1)).failure();
   }
 
   @Test public void parse_items_on_success() throws Exception {
     server.enqueue(new MockResponse().setResponseCode(200).setBody(fromFile("top.json")));
-    repo.page(0, callback);
+    repo.get(0, callback);
     Thread.sleep(200);
-    verify(callback, times(1)).success(anyListOf(RedditEntry.class));
+    verify(callback, times(1)).success(anyListOf(RedEntry.class));
   }
 
   private String fromFile(String path) throws IOException {

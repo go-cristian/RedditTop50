@@ -15,25 +15,11 @@
  */
 package co.iyubinest.reddittop.data.entries;
 
-import android.support.annotation.Nullable;
-import com.google.auto.value.AutoValue;
-import java.util.Date;
+import co.iyubinest.reddittop.data.entries.entities.WebEntries;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
-@AutoValue public abstract class RedditEntry {
-  public static RedditEntry create(String title, String author, Date date, int comments,
-      @Nullable String thumbnail, @Nullable String preview) {
-    return new AutoValue_RedditEntry(title, author, date, comments, thumbnail, preview);
-  }
-
-  public abstract String title();
-
-  public abstract String author();
-
-  public abstract Date date();
-
-  public abstract int comments();
-
-  public abstract @Nullable String thumbnail();
-
-  public abstract @Nullable String preview();
+public interface RedEntriesService {
+  @GET("top.json") Call<WebEntries> entries(@Query("count") int count, @Query("limit") int limit);
 }

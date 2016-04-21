@@ -13,23 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.ui.entries;
+package co.iyubinest.reddittop.ui.preview;
 
 import co.iyubinest.reddittop.data.entries.RedEntry;
-import java.util.Collection;
 
-public interface EntriesView {
-  void showLoading();
+public class PreviewSource {
+  private final PreviewView view;
+  private final PreviewRepo repo;
+  private RedEntry entry;
 
-  void showRetry();
+  public PreviewSource(PreviewView view, PreviewRepo repo) {
+    this.view = view;
+    this.repo = repo;
+  }
 
-  void render(Collection<RedEntry> entries);
+  public void init(RedEntry entry) {
+    this.entry = entry;
+    view.showImage(entry.thumbnail());
+  }
 
-  void showRetryCell();
+  public void saveImage() {
+    repo.save(entry.preview(), new PreviewRepo.Callback() {
+      @Override public void onFailure() {
+        view.showSaveImageError();
+      }
 
-  void showLoadingCell();
-
-  void showUpdating();
-
-  void clearEntries();
+      @Override public void onSuccess() {
+        view.showSaveImageGreeting();
+      }
+    });
+  }
 }

@@ -6,3 +6,10 @@
 .DS_Store
 /build
 /captures
+.gradle
+reports
+local.properties
+.idea
+*.iml
+build
+.DS_Store

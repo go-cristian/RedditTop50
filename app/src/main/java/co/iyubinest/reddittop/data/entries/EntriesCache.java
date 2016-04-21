@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.di;
+package co.iyubinest.reddittop.data.entries;
 
-import co.iyubinest.reddittop.ui.entries.EntriesActivity;
-import dagger.Component;
-import javax.inject.Singleton;
+import java.util.Collection;
 
-@Singleton @Component(modules = AppModule.class) public interface AppComponent {
-  void inject(EntriesActivity activity);
+public interface EntriesCache {
+  boolean has(int number);
+
+  Collection<RedEntry> get(int number);
+
+  void save(int number, Collection<RedEntry> entries);
 }

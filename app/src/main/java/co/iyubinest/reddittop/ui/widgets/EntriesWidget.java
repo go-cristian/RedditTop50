@@ -17,8 +17,8 @@ package co.iyubinest.reddittop.ui.widgets;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -27,16 +27,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import co.iyubinest.reddittop.R;
-import co.iyubinest.reddittop.data.entries.RedditEntry;
+import co.iyubinest.reddittop.data.entries.RedEntry;
 import co.iyubinest.reddittop.ui.ImageLoader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 public class EntriesWidget extends RecyclerView {
   private EndReachedListener endReachedistener;
-  private LinearLayoutManager layoutManager;
+  private StaggeredGridLayoutManager layoutManager;
 
   public EntriesWidget(Context context) {
     super(context);
@@ -55,13 +54,15 @@ public class EntriesWidget extends RecyclerView {
 
   private void init() {
     setAdapter(new Adapter());
-    layoutManager = new LinearLayoutManager(getContext());
+    final int rows = getResources().getInteger(R.integer.rows);
+    layoutManager = new StaggeredGridLayoutManager(rows, StaggeredGridLayoutManager.VERTICAL);
+    setHasFixedSize(false);
     setLayoutManager(layoutManager);
     addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         if (dy > 0) {
-          if (layoutManager.findLastCompletelyVisibleItemPosition()
-              == layoutManager.getItemCount() - 1) {
+          if (layoutManager.findLastVisibleItemPositions(new int[rows])[0]
+              == layoutManager.getItemCount() - rows) {
             if (endReachedistener != null) endReachedistener.onEndReached();
           }
         }
@@ -69,7 +70,7 @@ public class EntriesWidget extends RecyclerView {
     });
   }
 
-  public void add(Collection<RedditEntry> entries) {
+  public void add(Collection<RedEntry> entries) {
     ((Adapter) getAdapter()).add(entries);
     getAdapter().notifyDataSetChanged();
   }
@@ -82,25 +83,29 @@ public class EntriesWidget extends RecyclerView {
     ((Adapter) getAdapter()).setEntryListener(listener);
   }
 
+  public void clear() {
+    ((Adapter) getAdapter()).clear();
+  }
+
   public interface EndReachedListener {
     void onEndReached();
   }
 
   public interface EntrySelectedListener {
-    void onEntrySelected(RedditEntry entry);
+    void onEntrySelected(RedEntry entry, View view);
   }
 
   protected interface OnSelectedListener {
-    void onSelected(int position);
+    void onSelected(int position, View view);
   }
 
   private class Adapter extends RecyclerView.Adapter<Holder> {
 
-    private List<RedditEntry> entries = new ArrayList<>();
+    private List<RedEntry> entries = new ArrayList<>();
     private EntrySelectedListener entryListener;
     private final OnSelectedListener listener = new OnSelectedListener() {
-      @Override public void onSelected(int position) {
-        if (entryListener != null) entryListener.onEntrySelected(entries.get(position));
+      @Override public void onSelected(int position, View view) {
+        if (entryListener != null) entryListener.onEntrySelected(entries.get(position), view);
       }
     };
 
@@ -122,8 +127,12 @@ public class EntriesWidget extends RecyclerView {
       return entries.size();
     }
 
-    public void add(Collection<RedditEntry> entries) {
+    public void add(Collection<RedEntry> entries) {
       this.entries.addAll(entries);
+    }
+
+    public void clear() {
+      this.entries.clear();
     }
   }
 
@@ -131,27 +140,34 @@ public class EntriesWidget extends RecyclerView {
 
     private final TextView title;
     private final TextView subtitle;
+    private final TextView comments;
     private final ImageView thumbnail;
 
     public Holder(View view, final OnSelectedListener listener) {
       super(view);
       title = (TextView) view.findViewById(R.id.entry_title);
       subtitle = (TextView) view.findViewById(R.id.entry_subtitle);
+      comments = (TextView) view.findViewById(R.id.entry_comments);
       thumbnail = (ImageView) view.findViewById(R.id.entry_thumbnail);
       view.setOnClickListener(new OnClickListener() {
         @Override public void onClick(View v) {
-          if (listener != null) listener.onSelected(getAdapterPosition());
+          if (listener != null) listener.onSelected(getAdapterPosition(), itemView);
         }
       });
     }
 
-    public void entry(RedditEntry entry) {
+    public void entry(RedEntry entry) {
       title.setText(entry.title());
-      subtitle.setText(String.format("%s - %s", entry.author(),
-          DateUtils.getRelativeDateTimeString(getContext(),
-              new Date().getTime() - entry.date().getTime(), DateUtils.SECOND_IN_MILLIS,
-              DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL)));
-      ImageLoader.load(thumbnail, entry.thumbnail());
+      subtitle.setText(getResources().getString(R.string.entry_subtitle_format, entry.author(),
+          DateUtils.getRelativeDateTimeString(getContext(), entry.date().getTime(),
+              DateUtils.SECOND_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL)));
+      comments.setText(
+          getResources().getQuantityString(R.plurals.comments, entry.comments(), entry.comments()));
+      if (entry.thumbnail() != null && entry.thumbnail().length() > 1) {
+        ImageLoader.load(thumbnail, entry.thumbnail());
+      } else {
+        thumbnail.setVisibility(GONE);
+      }
     }
   }
 }

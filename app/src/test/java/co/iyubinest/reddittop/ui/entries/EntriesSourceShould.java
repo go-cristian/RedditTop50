@@ -16,7 +16,7 @@
 package co.iyubinest.reddittop.ui.entries;
 
 import co.iyubinest.reddittop.data.entries.EntriesRepo;
-import co.iyubinest.reddittop.data.entries.RedditEntry;
+import co.iyubinest.reddittop.data.entries.RedEntry;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
@@ -36,7 +36,7 @@ public class EntriesSourceShould {
 
   @Mock EntriesView view;
   @Mock EntriesRepo repo;
-  @Mock List<RedditEntry> entries;
+  @Mock List<RedEntry> entries;
   @Captor ArgumentCaptor<EntriesRepo.Callback> captor;
   EntriesSource source;
 
@@ -61,7 +61,7 @@ public class EntriesSourceShould {
   @Test public void show_retry_when_source_is_empty() throws Exception {
     source.request();
     verify(repo, times(1)).page(eq(0), captor.capture());
-    captor.getValue().success(new ArrayList<RedditEntry>());
+    captor.getValue().success(new ArrayList<RedEntry>());
     verify(view, times(1)).showRetry();
   }
 
@@ -69,7 +69,8 @@ public class EntriesSourceShould {
     source.request();
     verify(repo, times(1)).page(eq(0), captor.capture());
     captor.getValue().success(entries);
-    verify(view, times(1)).render(anyListOf(RedditEntry.class));
+    verify(view, times(1)).render(anyListOf(RedEntry.class));
+    verify(view, times(0)).clearEntries();
   }
 
   @Test public void show_error_cell_when_request_next_page_with_source_error() throws Exception {
@@ -83,6 +84,9 @@ public class EntriesSourceShould {
     captor.getValue().failure();
 
     verify(view, times(1)).showRetryCell();
+    verify(view, times(1)).showLoading();
+    verify(view, times(1)).showLoadingCell();
+    verify(view, times(0)).clearEntries();
   }
 
   @Test public void show_more_elements_when_request_next_page_success() throws Exception {
@@ -95,6 +99,30 @@ public class EntriesSourceShould {
     verify(repo, times(1)).page(eq(1), captor.capture());
     captor.getValue().success(entries);
 
-    verify(view, times(2)).render(anyListOf(RedditEntry.class));
+    verify(view, times(2)).render(anyListOf(RedEntry.class));
+    verify(view, times(1)).showLoading();
+    verify(view, times(1)).showLoadingCell();
+    verify(view, times(0)).clearEntries();
+  }
+
+  @Test public void show_only_one_page_when_refreshing() throws Exception {
+    //first call success
+    source.request();
+    verify(repo, times(1)).page(eq(0), captor.capture());
+    captor.getValue().success(entries);
+    //second call is a success too
+    source.request();
+    verify(repo, times(1)).page(eq(1), captor.capture());
+    captor.getValue().success(entries);
+
+    //update triggers page 0
+    source.update();
+    captor.getValue().success(entries);
+
+    verify(view, times(3)).render(anyListOf(RedEntry.class));
+    verify(view, times(1)).showLoading();
+    verify(view, times(1)).clearEntries();
+    verify(view, times(1)).showUpdating();
+    verify(view, times(1)).showLoadingCell();
   }
 }

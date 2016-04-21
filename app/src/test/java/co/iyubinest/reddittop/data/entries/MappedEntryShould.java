@@ -37,7 +37,7 @@ import static org.junit.Assert.assertThat;
 public class MappedEntryShould {
 
   private static final WebEntries CURRENT = new WebEntries();
-  private static final List<RedditEntry> EXPECTED = new ArrayList<>(1);
+  private static final List<RedEntry> EXPECTED = new ArrayList<>(1);
 
   static {
     Child child = new Child();
@@ -59,9 +59,8 @@ public class MappedEntryShould {
 
     CURRENT.data.children.add(child);
 
-    EXPECTED.add(
-        RedditEntry.create("Title", "Author", new Date(1461110121L * 1000L), 15, "some url",
-            "another url"));
+    EXPECTED.add(RedEntry.create("Title", "Author", new Date(1461110121L * 1000L), 15, "some url",
+        "another url"));
   }
 
   @Test public void return_empty_when_invalid() throws Exception {
