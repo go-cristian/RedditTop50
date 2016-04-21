@@ -29,3 +29,5 @@ notifications:
   email: false
 
 sudo: false
+
+script: ./gradlew build test connectedAndroidTest

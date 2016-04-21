@@ -32,11 +32,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import co.iyubinest.reddittop.R;
 import co.iyubinest.reddittop.data.entries.RedEntry;
+import co.iyubinest.reddittop.data.preview.PreviewRepo;
 import co.iyubinest.reddittop.ui.BaseActivity;
 import co.iyubinest.reddittop.ui.ImageLoader;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.inject.Inject;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class PreviewActivity extends BaseActivity implements PreviewView {
 
@@ -175,18 +177,20 @@ public class PreviewActivity extends BaseActivity implements PreviewView {
   @Override public void showImage(String imageUrl) {
     ImageLoader.load(previewView, imageUrl, new ImageLoader.Callback() {
       @Override public void ready() {
-        prepareanimation();
+        prepareAnimation();
       }
     });
   }
 
-  private void prepareanimation() {
+  private void prepareAnimation() {
     Bundle bundle = getIntent().getExtras();
     final int thumbnailTop = bundle.getInt(TOP);
     final int thumbnailLeft = bundle.getInt(LEFT);
     final int thumbnailWidth = bundle.getInt(WIDTH);
     final int thumbnailHeight = bundle.getInt(HEIGHT);
     originalOrientation = bundle.getInt(ORIENTATION);
+
+    new PhotoViewAttacher(previewView);
 
     ViewTreeObserver observer = previewView.getViewTreeObserver();
     observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

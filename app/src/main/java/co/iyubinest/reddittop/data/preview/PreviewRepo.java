@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package co.iyubinest.reddittop.ui.preview;
+package co.iyubinest.reddittop.data.preview;
 
 public interface PreviewRepo {
   void save(String imageUrl, Callback callback);

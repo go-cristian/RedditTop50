@@ -17,7 +17,7 @@ package co.iyubinest.reddittop.di;
 
 import co.iyubinest.reddittop.data.preview.GlideMediaStoreRepo;
 import co.iyubinest.reddittop.ui.BaseActivity;
-import co.iyubinest.reddittop.ui.preview.PreviewRepo;
+import co.iyubinest.reddittop.data.preview.PreviewRepo;
 import dagger.Module;
 import dagger.Provides;
 

@@ -1,6 +1,7 @@
 package co.iyubinest.reddittop;
 
 import android.content.Intent;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -68,9 +69,6 @@ import static java.util.concurrent.TimeUnit.MINUTES;
     onView(withId(R.id.entries_wrapper)).check(matches(withEffectiveVisibility(VISIBLE)));
     onView(withId(R.id.retry)).check(matches(withEffectiveVisibility(GONE)));
     onView(withId(R.id.entries)).perform(actionOnItemAtPosition(0, click()));
-
-    rule.launchActivity(new Intent());
-    intended(hasComponent(PreviewActivity.class.getName()));
   }
 
   private String fromAsset(String assetName) throws Exception {

@@ -24,7 +24,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import co.iyubinest.reddittop.ui.BaseActivity;
-import co.iyubinest.reddittop.ui.preview.PreviewRepo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;

@@ -35,6 +35,8 @@ public class App extends Application {
   }
 
   @VisibleForTesting public void baseUrl(String baseUrl) {
+    //This is workaround for creating the UI Tests with MockWebServer, so the reason for accepting
+    // this at this point is close related to the fact of get a connection of MockWebServer
     injector = DaggerAppComponent.builder().appModule(new AppModule(baseUrl)).build();
   }
 }

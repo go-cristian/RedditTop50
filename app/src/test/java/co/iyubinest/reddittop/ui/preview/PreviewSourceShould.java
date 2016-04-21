@@ -16,6 +16,7 @@
 package co.iyubinest.reddittop.ui.preview;
 
 import co.iyubinest.reddittop.data.entries.RedEntry;
+import co.iyubinest.reddittop.data.preview.PreviewRepo;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;

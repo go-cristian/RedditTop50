@@ -15,12 +15,15 @@
  */
 package co.iyubinest.reddittop.data.entries;
 
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Mockito.*;
 
 public class MemoryEntriesCacheShould {
 
@@ -40,13 +43,13 @@ public class MemoryEntriesCacheShould {
     cache.save(0, null);
     assertThat(cache.has(0), is(false));
 
-    cache.save(0, anyListOf(RedEntry.class));
+    cache.save(0, mock(List.class));
     assertThat(cache.has(0), is(true));
 
     cache.save(1, null);
     assertThat(cache.has(1), is(false));
 
-    cache.save(1, anyListOf(RedEntry.class));
+    cache.save(1, mock(List.class));
     assertThat(cache.has(1), is(true));
   }
 }

@@ -16,6 +16,7 @@
 package co.iyubinest.reddittop.ui.preview;
 
 import co.iyubinest.reddittop.data.entries.RedEntry;
+import co.iyubinest.reddittop.data.preview.PreviewRepo;
 
 public class PreviewSource {
   private final PreviewView view;
@@ -29,7 +30,7 @@ public class PreviewSource {
 
   public void init(RedEntry entry) {
     this.entry = entry;
-    view.showImage(entry.thumbnail());
+    view.showImage(entry.preview());
   }
 
   public void saveImage() {
