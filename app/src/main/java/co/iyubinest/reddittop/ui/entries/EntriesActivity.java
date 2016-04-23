@@ -117,12 +117,7 @@ public class EntriesActivity extends BaseActivity
 
   @Override public void onEntrySelected(RedEntry entry, View view) {
     if (entry.preview() != null) {
-      View imageToAnimate = view.findViewById(R.id.entry_thumbnail);
-      int[] screenLocation = new int[2];
-      imageToAnimate.getLocationOnScreen(screenLocation);
-      startActivity(
-          PreviewActivity.getIntent(this, entry, screenLocation, imageToAnimate.getWidth(),
-              imageToAnimate.getHeight()));
+      startActivity(PreviewActivity.getIntent(this, entry, view));
       overridePendingTransition(0, 0);
     }
   }

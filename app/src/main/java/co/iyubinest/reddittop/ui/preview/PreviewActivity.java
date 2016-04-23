@@ -62,21 +62,22 @@ public class PreviewActivity extends BaseActivity implements PreviewView {
   private float widthScale;
   private float heightScale;
 
-  public static Intent getIntent(Context context, RedEntry entry, int[] screenLocation, int width,
-      int height) {
-    assert entry == null;
+  public static Intent getIntent(Context context, RedEntry entry, View view) {
     int orientation = context.getResources().getConfiguration().orientation;
 
     Intent intent = new Intent(context, PreviewActivity.class);
     Bundle bundle = new Bundle();
     bundle.putParcelable(ENTRY, entry);
 
+    int[] screenLocation = new int[2];
+    view.getLocationOnScreen(screenLocation);
+
     intent.
         putExtra(ORIENTATION, orientation).
         putExtra(LEFT, screenLocation[0]).
         putExtra(TOP, screenLocation[1]).
-        putExtra(WIDTH, width).
-        putExtra(HEIGHT, height).putExtras(bundle);
+        putExtra(WIDTH, view.getWidth()).
+        putExtra(HEIGHT, view.getHeight()).putExtras(bundle);
 
     return intent;
   }
