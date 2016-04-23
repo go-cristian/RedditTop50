@@ -19,7 +19,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
-public class Preview {
+public final class Preview {
 
   @SerializedName("images") @Expose public List<Images> images;
 }

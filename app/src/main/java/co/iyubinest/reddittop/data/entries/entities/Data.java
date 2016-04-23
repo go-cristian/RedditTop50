@@ -20,7 +20,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Data {
+public final class Data {
 
   @SerializedName("children") @Expose public List<Child> children = new ArrayList<>();
 }

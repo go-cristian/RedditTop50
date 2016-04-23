@@ -29,7 +29,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import java.util.Date;
 
-public class GlideMediaStoreRepo implements PreviewRepo {
+public final class GlideMediaStoreRepo implements PreviewRepo {
 
   private final BaseActivity activity;
 

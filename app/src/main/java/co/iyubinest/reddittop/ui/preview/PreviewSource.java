@@ -18,7 +18,7 @@ package co.iyubinest.reddittop.ui.preview;
 import co.iyubinest.reddittop.data.entries.RedEntry;
 import co.iyubinest.reddittop.data.preview.PreviewRepo;
 
-public class PreviewSource {
+public final class PreviewSource {
   private final PreviewView view;
   private final PreviewRepo repo;
   private RedEntry entry;

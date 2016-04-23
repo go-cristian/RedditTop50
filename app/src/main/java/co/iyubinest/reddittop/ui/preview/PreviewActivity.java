@@ -86,7 +86,7 @@ public class PreviewActivity extends BaseActivity implements PreviewView {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_preview);
     ButterKnife.bind(this);
-    appinjector().inject(this);
+    appInjector().inject(this);
     source = new PreviewSource(this, repo);
     source.init((RedEntry) getIntent().getParcelableExtra(ENTRY));
     configureActionBar();

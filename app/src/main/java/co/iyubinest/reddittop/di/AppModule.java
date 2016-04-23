@@ -15,6 +15,7 @@
  */
 package co.iyubinest.reddittop.di;
 
+import co.iyubinest.reddittop.data.entries.DefaultEntriesRepo;
 import co.iyubinest.reddittop.data.entries.EntriesCache;
 import co.iyubinest.reddittop.data.entries.EntriesRepo;
 import co.iyubinest.reddittop.data.entries.EntriesService;
@@ -24,7 +25,7 @@ import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
 
-@Module public class AppModule {
+@Module public final class AppModule {
 
   private final String baseurl;
 
@@ -41,6 +42,6 @@ import javax.inject.Singleton;
   }
 
   @Singleton @Provides public EntriesRepo entriesRepo(EntriesCache cache, EntriesService service) {
-    return new EntriesRepo(cache, service);
+    return new DefaultEntriesRepo(cache, service);
   }
 }

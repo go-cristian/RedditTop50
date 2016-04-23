@@ -41,7 +41,7 @@ public class BaseActivity extends AppCompatActivity {
     return getApp().injector();
   }
 
-  public ActivityComponent appinjector() {
+  public ActivityComponent appInjector() {
     return injector;
   }
 }

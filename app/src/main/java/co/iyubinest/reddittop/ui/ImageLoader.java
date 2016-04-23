@@ -21,7 +21,8 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
-public class ImageLoader {
+//TODO: Change this to fit with OOP and not use "er" static classes
+public final class ImageLoader {
 
   public static void load(ImageView imageView, String imageUrl) {
     Glide.with(imageView.getContext()).load(imageUrl).centerCrop().crossFade().into(imageView);

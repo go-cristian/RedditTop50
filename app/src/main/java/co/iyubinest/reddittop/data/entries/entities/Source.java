@@ -18,6 +18,6 @@ package co.iyubinest.reddittop.data.entries.entities;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Source {
+public final class Source {
   @SerializedName("url") @Expose public String url;
 }

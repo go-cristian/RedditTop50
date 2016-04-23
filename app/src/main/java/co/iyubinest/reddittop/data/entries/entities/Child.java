@@ -18,7 +18,7 @@ package co.iyubinest.reddittop.data.entries.entities;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Child {
+public final class Child {
 
   @SerializedName("data") @Expose public Data_ data;
 }

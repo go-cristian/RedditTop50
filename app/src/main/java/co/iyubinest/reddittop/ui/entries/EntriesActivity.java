@@ -108,17 +108,17 @@ public class EntriesActivity extends BaseActivity
     source.request();
   }
 
-  private void show(View view) {
-    loadingView.setVisibility(GONE);
-    retryView.setVisibility(GONE);
-    entriesWrapper.setVisibility(GONE);
-    view.setVisibility(VISIBLE);
-  }
-
   @Override public void onEntrySelected(RedEntry entry, View view) {
     if (entry.preview() != null) {
       startActivity(PreviewActivity.getIntent(this, entry, view));
       overridePendingTransition(0, 0);
     }
+  }
+
+  private void show(View view) {
+    loadingView.setVisibility(GONE);
+    retryView.setVisibility(GONE);
+    entriesWrapper.setVisibility(GONE);
+    view.setVisibility(VISIBLE);
   }
 }

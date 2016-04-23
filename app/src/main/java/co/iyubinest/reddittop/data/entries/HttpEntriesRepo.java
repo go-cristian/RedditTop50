@@ -21,7 +21,7 @@ import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class HttpEntriesRepo implements EntriesService, Callback<WebEntries> {
+public final class HttpEntriesRepo implements EntriesService, Callback<WebEntries> {
   private final RedEntriesService service;
   private EntriesRepo.Callback callback;
 

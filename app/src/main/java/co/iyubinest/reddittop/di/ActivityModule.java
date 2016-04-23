@@ -21,7 +21,7 @@ import co.iyubinest.reddittop.data.preview.PreviewRepo;
 import dagger.Module;
 import dagger.Provides;
 
-@Module public class ActivityModule {
+@Module public final class ActivityModule {
 
   private final BaseActivity activity;
 

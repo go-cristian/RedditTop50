@@ -19,7 +19,7 @@ import co.iyubinest.reddittop.data.entries.EntriesRepo;
 import co.iyubinest.reddittop.data.entries.RedEntry;
 import java.util.Collection;
 
-public class EntriesSource implements EntriesRepo.Callback {
+public final class EntriesSource implements EntriesRepo.Callback {
   private final EntriesView view;
   private final EntriesRepo repo;
   private int currentPage = 0;
@@ -28,32 +28,6 @@ public class EntriesSource implements EntriesRepo.Callback {
   public EntriesSource(EntriesView view, EntriesRepo repo) {
     this.view = view;
     this.repo = repo;
-  }
-
-  public void request() {
-    request(false);
-  }
-
-  public void request(boolean update) {
-    this.update = update;
-    if (currentPage == 0) {
-      if (update) {
-        view.showUpdating();
-      } else {
-        view.showLoading();
-      }
-    } else {
-      view.showLoadingCell();
-    }
-    repo.page(currentPage, this);
-  }
-
-  @Override public void failure() {
-    if (currentPage == 0) {
-      view.showRetry();
-    } else {
-      view.showRetryCell();
-    }
   }
 
   @Override public void success(Collection<RedEntry> entries) {
@@ -66,8 +40,34 @@ public class EntriesSource implements EntriesRepo.Callback {
     }
   }
 
+  @Override public void failure() {
+    if (currentPage == 0) {
+      view.showRetry();
+    } else {
+      view.showRetryCell();
+    }
+  }
+
+  public void request() {
+    request(false);
+  }
+
   public void update() {
     currentPage = 0;
     request(true);
+  }
+
+  private void request(boolean update) {
+    this.update = update;
+    if (currentPage == 0) {
+      if (update) {
+        view.showUpdating();
+      } else {
+        view.showLoading();
+      }
+    } else {
+      view.showLoadingCell();
+    }
+    repo.page(currentPage, this);
   }
 }
