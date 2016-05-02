@@ -30,4 +30,4 @@ notifications:
 
 sudo: false
 
-script: ./gradlew build test connectedAndroidTest spoon
+script: ./gradlew build test connectedAndroidTest
