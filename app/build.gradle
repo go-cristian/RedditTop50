@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'spoon'
 
 android {
   compileSdkVersion 23
@@ -52,10 +51,6 @@ configurations.all {
   resolutionStrategy.force 'com.android.support:support-annotations:23.1.1'
 }
 
-spoon {
-  debug = true;
-}
-
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -99,5 +94,4 @@ dependencies {
     exclude module: 'recyclerview-v7'
   }
   androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.0.0-RC1'
-  androidTestCompile 'com.squareup.spoon:spoon-client:1.2.0'
 }

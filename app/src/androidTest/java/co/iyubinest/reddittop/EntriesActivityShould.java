@@ -19,7 +19,6 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import co.iyubinest.reddittop.ui.entries.EntriesActivity;
-import com.squareup.spoon.Spoon;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -71,7 +70,6 @@ import static java.util.concurrent.TimeUnit.MINUTES;
     server.enqueue(new MockResponse().setResponseCode(500));
     rule.launchActivity(null);
     onView(withId(R.id.retry)).check(matches(withEffectiveVisibility(VISIBLE)));
-    Spoon.screenshot(rule.getActivity(), "initial_state");
     onView(withId(R.id.entries_wrapper)).check(matches(withEffectiveVisibility(GONE)));
   }
 
@@ -79,9 +77,7 @@ import static java.util.concurrent.TimeUnit.MINUTES;
     server.enqueue(new MockResponse().setResponseCode(200).setBody(fromAsset("top.json")));
     rule.launchActivity(null);
     onView(withId(R.id.entries_wrapper)).check(matches(withEffectiveVisibility(VISIBLE)));
-    Spoon.screenshot(rule.getActivity(), "initial_state");
     onView(withId(R.id.retry)).check(matches(withEffectiveVisibility(GONE)));
-    Spoon.screenshot(rule.getActivity(), "after_state");
     onView(withId(R.id.entries)).perform(actionOnItemAtPosition(0, click()));
   }
 
@@ -89,9 +85,7 @@ import static java.util.concurrent.TimeUnit.MINUTES;
     server.enqueue(new MockResponse().setResponseCode(200).setBody(fromAsset("top.json")));
     rule.launchActivity(null);
     onView(withId(R.id.entries_wrapper)).check(matches(withEffectiveVisibility(VISIBLE)));
-    Spoon.screenshot(rule.getActivity(), "initial_state");
     onView(withId(R.id.retry)).check(matches(withEffectiveVisibility(GONE)));
-    Spoon.screenshot(rule.getActivity(), "after_state");
     onView(withId(R.id.entries)).perform(actionOnItemAtPosition(0, click()));
   }
 

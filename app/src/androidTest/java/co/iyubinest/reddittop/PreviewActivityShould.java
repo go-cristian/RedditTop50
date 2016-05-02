@@ -20,7 +20,6 @@ import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 import co.iyubinest.reddittop.data.entries.RedEntry;
 import co.iyubinest.reddittop.ui.preview.PreviewActivity;
-import com.squareup.spoon.Spoon;
 import java.util.Date;
 import org.junit.Before;
 import org.junit.Rule;
@@ -55,13 +54,11 @@ public class PreviewActivityShould {
 
   @Test public void show_screen() {
     onView(withId(R.id.toolbar)).check(matches(withEffectiveVisibility(VISIBLE)));
-    Spoon.screenshot(rule.getActivity(), "initial_state");
     onView(withId(R.id.preview_root)).check(matches(withEffectiveVisibility(VISIBLE)));
     onView(withId(R.id.preview_image)).check(matches(withEffectiveVisibility(VISIBLE)));
   }
 
   @Test public void save_image() {
-    Spoon.screenshot(rule.getActivity(), "initial_state");
     onView(withId(R.id.preview_save)).perform(ViewActions.click());
     //TODO: Check for image being saved
   }
