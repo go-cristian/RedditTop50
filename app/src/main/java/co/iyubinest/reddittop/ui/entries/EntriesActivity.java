@@ -20,7 +20,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.iyubinest.reddittop.R;
 import co.iyubinest.reddittop.data.entries.EntriesRepo;
@@ -37,12 +37,12 @@ import static android.view.View.VISIBLE;
 public class EntriesActivity extends BaseActivity
     implements EntriesView, EntriesWidget.EndReachedListener, EntriesWidget.EntrySelectedListener {
 
-  @Bind(R.id.loading) View loadingView;
-  @Bind(R.id.retry) View retryView;
-  @Bind(R.id.entries_wrapper) View entriesWrapper;
-  @Bind(R.id.entries) EntriesWidget entriesView;
-  @Bind(R.id.toolbar_title) TextView titleView;
-  @Bind(R.id.refresh) SwipeRefreshLayout refreshView;
+  @BindView(R.id.loading) View loadingView;
+  @BindView(R.id.retry) View retryView;
+  @BindView(R.id.entries_wrapper) View entriesWrapper;
+  @BindView(R.id.entries) EntriesWidget entriesView;
+  @BindView(R.id.toolbar_title) TextView titleView;
+  @BindView(R.id.refresh) SwipeRefreshLayout refreshView;
   @Inject EntriesRepo repo;
   private EntriesSource source;
 
@@ -59,11 +59,6 @@ public class EntriesActivity extends BaseActivity
         source.update();
       }
     });
-  }
-
-  @Override protected void onDestroy() {
-    super.onDestroy();
-    ButterKnife.unbind(this);
   }
 
   @Override public void showLoading() {

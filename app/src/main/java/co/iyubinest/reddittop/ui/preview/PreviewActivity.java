@@ -28,7 +28,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.iyubinest.reddittop.R;
 import co.iyubinest.reddittop.data.entries.RedEntry;
@@ -51,9 +51,9 @@ public class PreviewActivity extends BaseActivity implements PreviewView {
   private static final int ANIM_DURATION = 500;
   private static final String ENTRY = "entry";
   static float sAnimatorScale = 1;
-  @Bind(R.id.preview_root) View rootView;
-  @Bind(R.id.preview_image) ImageView previewView;
-  @Bind(R.id.toolbar) Toolbar toolbarView;
+  @BindView(R.id.preview_root) View rootView;
+  @BindView(R.id.preview_image) ImageView previewView;
+  @BindView(R.id.toolbar) Toolbar toolbarView;
   @Inject PreviewRepo repo;
   private PreviewSource source;
   private int originalOrientation;
@@ -172,7 +172,6 @@ public class PreviewActivity extends BaseActivity implements PreviewView {
 
   @Override protected void onDestroy() {
     super.onDestroy();
-    ButterKnife.unbind(this);
   }
 
   @Override public void showImage(String imageUrl) {
