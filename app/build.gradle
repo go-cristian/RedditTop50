@@ -42,6 +42,11 @@ android {
   lintOptions {
     abortOnError false
   }
+
+  dexOptions {
+    javaMaxHeapSize "512M"
+    threadCount 2
+  }
 }
 
 configurations.all {
