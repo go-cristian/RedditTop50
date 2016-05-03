@@ -1,24 +1,46 @@
 language: android
+
+jdk:
+ - oraclejdk8
+
 android:
   components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
     - platform-tools
     - tools
-
-    # The BuildTools version used by your project
-    - build-tools-19.1.0
-
-    # The SDK version used to compile your project
-    - android-19
-
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
+    - android-23
+    - build-tools-23.0.3
     - extra-android-m2repository
-    - addon-google_apis-google-19
+    - sys-img-armeabi-v7a-android-21
 
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-19
-    - sys-img-x86-android-17
+before_script:
+  - sudo service postgresql stop || true
+  - sudo service mysql stop || true
+  - sudo service memcached stop || true
+  - sudo service bootlogd stop || true
+  - sudo service elasticsearch stop || true
+  - sudo service mongodb stop || true
+  - sudo service neo4j stop || true
+  - sudo service cassandra stop || true
+  - sudo service riak stop || true
+  - sudo service rsync stop || true
+  - sudo service x11-common stop || true
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell settings put global window_animation_scale 0 &
+  - adb shell settings put global transition_animation_scale 0 &
+  - adb shell settings put global animator_duration_scale 0 &
+  - adb shell input keyevent 82 &
+
+env:
+  global:
+    - ADB_INSTALL_TIMEOUT=8
+
+notifications:
+  email: false
+
+cache: false
+
+sudo: false
+
+script: ./gradlew build test connectedAndroidTest
