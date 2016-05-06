@@ -24,6 +24,13 @@ before_script:
 before_install:
  - chmod +x gradlew
 
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
 env:
   global:
     - ADB_INSTALL_TIMEOUT=8
@@ -33,4 +40,10 @@ notifications:
 
 sudo: false
 
-script: ./gradlew build test connectedAndroidTest
+install:
+  - ./gradlew --version
+  - ./gradlew clean
+  - ./gradlew test
+  - ./gradlew connectedAndroidTest
+
+script: ./gradlew build
