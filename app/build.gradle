@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.github.kt3k.coveralls'
 
 android {
   compileSdkVersion 23
@@ -26,6 +27,9 @@ android {
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
+    debug {
+      testCoverageEnabled true
+    }
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -52,7 +56,14 @@ configurations.all {
   resolutionStrategy.force 'com.android.support:support-annotations:23.1.1'
 }
 
-cobertura.coverageFormats = ['html', 'xml']
+coveralls {
+  jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
+}
+
+tasks.coveralls {
+  dependsOn 'connectedAndroidTest'
+  onlyIf { System.env.'CI' }
+}
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
