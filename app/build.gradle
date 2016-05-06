@@ -43,7 +43,7 @@ android {
   }
 
   dexOptions {
-    javaMaxHeapSize "4g"
+    javaMaxHeapSize "3g"
     threadCount 2
   }
 }
