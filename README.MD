@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/iyubinest/RedditTop50.svg?branch=master)](https://travis-ci.org/iyubinest/RedditTop50)
 
-WEATHER CLIENT
+REDDIT TOP STORIES CLIENT
 ======
 
 A sample Android app which showcases common open source libraries.
@@ -16,13 +16,24 @@ way of retains and gets the data.
 This project doesn't contains any comments because it tries to be self-commented, this approach 
 encourages that the code is the documentation and it requires to be updated as it evolves.
 
+Features
+---------
+
+ * List of top stories on reddit
+ * List pagination
+ * List Swipe to refresh
+ * Memory cache for rotation 
+ * Layout with different number of columns depending on the device
+ * Show preview image
+ * Save preview image
+
 
 Screenshots
 ---------
 
-![alt text](https://github.com/iyubinest/androidchallenge/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true "App Icon")
-![alt text](https://github.com/iyubinest/androidchallenge/blob/master/art/mobile.png "Weather")
-![alt text](https://github.com/iyubinest/androidchallenge/blob/master/art/tablet.png "Weather")
+![alt text](https://github.com/iyubinest/RedditTop50/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true "App Icon")
+![alt text](https://github.com/iyubinest/RedditTop50/blob/master/art/list.png "Screnshoot Reddit Posts")
+![alt text](https://github.com/iyubinest/RedditTop50/blob/master/art/detail.png "Screnshoot Reddit Preview")
 
 
 Libraries
@@ -34,6 +45,7 @@ Libraries
  * Auto-Parcel
  * Gson
  * Glide
+ * PhotoView
  * Espresso
  * JUnit
  * Mockito
