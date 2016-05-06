@@ -21,6 +21,9 @@ before_script:
   - adb shell settings put global animator_duration_scale 0 &
   - adb shell input keyevent 82 &
 
+before_install:
+ - chmod +x gradlew
+
 env:
   global:
     - ADB_INSTALL_TIMEOUT=8
