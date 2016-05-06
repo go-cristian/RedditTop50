@@ -1,7 +1,7 @@
 language: android
 
 jdk:
- - oraclejdk8
+ - oraclejdk7
 
 android:
   components:
@@ -23,8 +23,8 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - ./gradlew test coveralls
-  - ./gradlew check connectedAndroidTest coveralls
+  - ./gradlew test
+  - ./gradlew check connectedAndroidTest
 
 env:
   global:

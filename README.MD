@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/iyubinest/RedditTop50.svg?branch=master)](https://travis-ci.org/iyubinest/RedditTop50)
+[![Coverage Status](https://coveralls.io/repos/github/iyubinest/RedditTop50/badge.svg?branch=master)](https://coveralls.io/github/iyubinest/RedditTop50?branch=master)
 
 REDDIT TOP STORIES CLIENT
 ======
