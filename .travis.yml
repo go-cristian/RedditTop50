@@ -1,7 +1,7 @@
 language: android
 
 jdk:
- - oraclejdk7
+ - oraclejdk8
 
 android:
   components:
@@ -25,7 +25,6 @@ before_script:
 script:
   - ./gradlew test
   - ./gradlew check connectedAndroidTest
-  - ./gradlew cobertura coveralls
 
 env:
   global:
@@ -42,3 +41,6 @@ sudo: required
 cache:
   directories:
     - $HOME/.gradle
+
+after_success:
+- ./gradlew cobertura coveralls
