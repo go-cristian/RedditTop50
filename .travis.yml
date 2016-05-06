@@ -23,9 +23,8 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - ./gradlew test
-  - ./gradlew check connectedAndroidTest
-  - ./gradlew cobertura coveralls
+  - ./gradlew test coveralls
+  - ./gradlew check connectedAndroidTest coveralls
 
 env:
   global:
@@ -41,4 +40,4 @@ sudo: required
 
 cache:
   directories:
-    - $HOME/.gradle
+    - $HOME/.gradlealls
