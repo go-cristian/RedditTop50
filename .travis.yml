@@ -41,3 +41,6 @@ sudo: required
 cache:
   directories:
     - $HOME/.gradle
+
+after_success:
+- ./gradlew cobertura coveralls
